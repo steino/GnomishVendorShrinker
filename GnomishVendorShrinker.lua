@@ -1,5 +1,5 @@
 
-local NUMROWS, ICONSIZE, GAP, SCROLLSTEP = 14, 17, 4, 5
+local NUMROWS, ICONSIZE, GAP, SCROLLSTEP = 1, 17, 4, 5
 local knowns = GVS_SCANNER
 local HONOR_POINTS, ARENA_POINTS = "|cffffffff|Hitem:43308:0:0:0:0:0:0:0:0|h[Honor Points]|h|r", "|cffffffff|Hitem:43307:0:0:0:0:0:0:0:0|h[Arena Points]|h|r"
 GVS_SCANNER = nil
@@ -126,7 +126,7 @@ local function GetAltCurrencyFrame(frame)
 	f.icon = f:CreateTexture()
 	f.icon:SetWidth(ICONSIZE) f.icon:SetHeight(ICONSIZE)
 
-	f.text = f:CreateFontString(nil, nil, "NumberFontNormalSmall")
+	f.text = f:CreateFontString(nil, nil, "GameFontNormalSmall")
 
 	f.SetValue = SetValue
 
@@ -163,7 +163,7 @@ local function AddAltCurrency(frame, i)
 end
 
 
-local ROWHEIGHT = 21
+local ROWHEIGHT = 24
 local rows = {}
 for i=1,NUMROWS do
 	local row = CreateFrame('Button', nil, GVS) -- base frame
@@ -204,16 +204,14 @@ for i=1,NUMROWS do
 
 	local popout = CreateFrame("Button", nil, row)
 	popout:SetPoint("RIGHT")
-	popout:SetWidth(ROWHEIGHT/2) popout:SetHeight(ROWHEIGHT)
-	popout:SetNormalTexture("Interface\\PaperDollInfoFrame\\UI-GearManager-FlyoutButton")
-	popout:SetHighlightTexture("Interface\\PaperDollInfoFrame\\UI-GearManager-FlyoutButton")
-	popout:GetNormalTexture():SetTexCoord(0.15625, 0.5, 0.84375, 0.5, 0.15625, 0, 0.84375, 0)
-	popout:GetHighlightTexture():SetTexCoord(0.15625, 1, 0.84375, 1, 0.15625, 0.5, 0.84375, 0.5)
+	popout:SetWidth(ROWHEIGHT) popout:SetHeight(ROWHEIGHT)
+	popout:SetNormalTexture("Interface\\Buttons\\UI-SpellbookIcon-NextPage-Up")
+	popout:SetHighlightTexture("Interface\\Buttons\\UI-Common-MouseHilight")
 	popout:SetScript("OnClick", PopoutOnClick)
 	popout.SplitStack = PopoutSplitStack
 	row.popout = popout
 
-	local ItemPrice = row:CreateFontString(nil, nil, "NumberFontNormalSmall")
+	local ItemPrice = row:CreateFontString(nil, nil, "GameFontNormalSmall")
 	ItemPrice:SetPoint('RIGHT', popout, "LEFT", -2, 0)
 	row.ItemPrice = ItemPrice
 
