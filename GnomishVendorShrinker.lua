@@ -1,5 +1,5 @@
 
-local NUMROWS, ICONSIZE, GAP, SCROLLSTEP = 1, 17, 4, 5
+local NUMROWS, ICONSIZE, GAP, SCROLLSTEP = 12, 17, 4, 5
 local knowns = GVS_SCANNER
 local HONOR_POINTS, ARENA_POINTS = "|cffffffff|Hitem:43308:0:0:0:0:0:0:0:0|h[Honor Points]|h|r", "|cffffffff|Hitem:43307:0:0:0:0:0:0:0:0|h[Arena Points]|h|r"
 GVS_SCANNER = nil
