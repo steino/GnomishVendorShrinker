@@ -20,14 +20,18 @@ GVS:Hide()
 
 
 local function OnClick(self, button)
-	if IsAltKeyDown() and not self.altcurrency then self:BuyItem(true)
-	elseif IsModifiedClick() then HandleModifiedItemClick(GetMerchantItemLink(self:GetID()))
-	elseif self.altcurrency then
-		local id = self:GetID()
-		local link = GetMerchantItemLink(id)
-		self.link, self.texture = GetMerchantItemLink(id), self.icon:GetTexture()
-		MerchantFrame_ConfirmExtendedItemCost(self)
-	else self:BuyItem() end
+	if (button == "LeftButton") then
+		PickupMerchantItem(self:GetID())
+	else
+		if IsAltKeyDown() and not self.altcurrency then self:BuyItem(true)
+		elseif IsModifiedClick() then HandleModifiedItemClick(GetMerchantItemLink(self:GetID()))
+		elseif self.altcurrency then
+			local id = self:GetID()
+			local link = GetMerchantItemLink(id)
+			self.link, self.texture = GetMerchantItemLink(id), self.icon:GetTexture()
+			MerchantFrame_ConfirmExtendedItemCost(self)
+		else self:BuyItem() end
+	end
 end
 
 
@@ -171,6 +175,9 @@ for i=1,NUMROWS do
 	row:SetPoint("TOP", i == 1 and GVS or rows[i-1], i == 1 and "TOP" or "BOTTOM")
 	row:SetPoint("LEFT")
 	row:SetPoint("RIGHT", -19, 0)
+
+	row:RegisterForClicks("LeftButtonUp","RightButtonUp");
+	row:RegisterForDrag("LeftButton");
 
 	row.BuyItem = BuyItem
 
