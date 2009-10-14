@@ -18,23 +18,6 @@ GVS:SetPoint("TOPLEFT", 21, -77)
 GVS:SetScript("OnEvent", function(self, event, ...) if self[event] then return self[event](self, event, ...) end end)
 GVS:Hide()
 
-
-local function OnClick(self, button)
-	if (button == "LeftButton") then
-		PickupMerchantItem(self:GetID())
-	else
-		if IsAltKeyDown() and not self.altcurrency then self:BuyItem(true)
-		elseif IsModifiedClick() then HandleModifiedItemClick(GetMerchantItemLink(self:GetID()))
-		elseif self.altcurrency then
-			local id = self:GetID()
-			local link = GetMerchantItemLink(id)
-			self.link, self.texture = GetMerchantItemLink(id), self.icon:GetTexture()
-			MerchantFrame_ConfirmExtendedItemCost(self)
-		else self:BuyItem() end
-	end
-end
-
-
 local function PopoutOnClick(self, button)
 	local id = self:GetParent():GetID()
 	local link = GetMerchantItemLink(id)
@@ -49,6 +32,24 @@ local function PopoutOnClick(self, button)
 	OpenStackSplitFrame(250, self, "LEFT", "RIGHT")
 end
 
+local function OnClick(self, button)
+	if (button == "LeftButton") then
+		if IsShiftKeyDown() then
+			PopoutOnClick(self, button)
+		elseif IsModifiedClick() then HandleModifiedItemClick(GetMerchantItemLink(self:GetID()))
+		else
+			PickupMerchantItem(self:GetID())
+		end
+	else
+		if IsAltKeyDown() and not self.altcurrency then self:BuyItem(true)
+				elseif self.altcurrency then
+			local id = self:GetID()
+			local link = GetMerchantItemLink(id)
+			self.link, self.texture = GetMerchantItemLink(id), self.icon:GetTexture()
+			MerchantFrame_ConfirmExtendedItemCost(self)
+		else self:BuyItem() end
+	end
+end
 
 local function Purchase(id, quantity)
 	local _, _, _, vendorStackSize, numAvailable = GetMerchantItemInfo(id)
